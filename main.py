@@ -3,7 +3,7 @@ import os
 from aiogram import Bot, Dispatcher, Router
 from aiogram.enums import ParseMode
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
-from aiogram.filters import Command, Text
+from aiogram.filters import Command
 from aiogram.fsm.storage.memory import MemoryStorage
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -26,11 +26,11 @@ def get_menu():
 async def start_cmd(msg: Message):
     await msg.answer("Привет! Я бот ComfortPro. Что нужно?", reply_markup=get_menu())
 
-@router.message(Text("Вызвать мастера"))
+@router.message(lambda msg: msg.text == "Вызвать мастера")
 async def request_service(msg: Message):
     await msg.answer("📍 Введите адрес, куда нужно вызвать мастера:")
 
-@router.message(Text("Я мастер"))
+@router.message(lambda msg: msg.text == "Я мастер")
 async def master_reg(msg: Message):
     await msg.answer("👷 Введите свои ФИО, город и опыт. Мы свяжемся с вами.")
 
